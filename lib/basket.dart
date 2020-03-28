@@ -36,6 +36,8 @@ class Basket {
 
   }
   update(int level, BasketBack basketback){
+    leftrun=basketback.leftrun;
+    rightrun=basketback.rightrun;
    if(level==3 || level==5){
 x=basketback.x+screenW/5-screenW/49;
 y=basketback.y+screenH/11+screenH/11;

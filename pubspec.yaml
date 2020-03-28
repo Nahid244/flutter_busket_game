@@ -60,6 +60,7 @@ flutter:
        - assets/images/volOff.png
        - assets/images/heart_life.png
        - assets/images/sound_off.png
+       - assets/images/sound_off_new.png
        - assets/images/sound_on.png
        - assets/images/volOn.png
        - assets/images/1.png

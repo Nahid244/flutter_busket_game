@@ -126,7 +126,7 @@ class Ball {
 //    }
 
     if(pastScore==score ){
-      life--;
+     // life--;
     }
     pastScore=score;
 
@@ -272,8 +272,17 @@ class Ball {
                  //   shootDirectionAfterCollision=-sqrt(velocity).toInt();
                    // shootDirectionAfterCollision=sqrt(velocity)*2;
                    // ballShootAmount=mass/2.5;
+                    if(level>2 && basket[hittedBasket].leftrun){
+                      shootDirection=0.8;
+                    }
+                    else if(level>2 && basket[hittedBasket].rightrun){
+                      shootDirection=1.2;
+                    }
+                    else{
+                      shootDirection=0.8;
+                    }
 
-                    shootDirection=1;
+
 
                   }
                   else{
@@ -281,7 +290,7 @@ class Ball {
                    // shootDirectionAfterCollision=-sqrt(velocity)*2;
                    // shootXdirection=tshootXdirection;
                    // ballShootAmount=-mass/9;
-                    shootDirection=-1;
+                    shootDirection=-2;
                   }
 
                }
@@ -292,7 +301,18 @@ class Ball {
                   // shootDirectionAfterCollision=-sqrt(velocity).toInt();
                    //shootDirectionAfterCollision=-sqrt(velocity)*2;
                   // ballShootAmount=-mass/2.5;
-                   shootDirection=-1;
+                   if(level>2 && basket[hittedBasket].leftrun){
+                     shootDirection=-1.2;
+                   }
+                   else if(level>2 && basket[hittedBasket].rightrun){
+                     shootDirection=-0.8;
+                   }
+                   else{
+                     shootDirection=-0.8;
+                   }
+
+
+                  // shootDirection=-1;
                   // print("vhitor");
                  }
                  else{
@@ -300,7 +320,7 @@ class Ball {
                   // shootDirectionAfterCollision=sqrt(velocity)*2;
                   // shootXdirection=tshootXdirection;
                   // ballShootAmount=mass/9;
-                   shootDirection=1;
+                   shootDirection=2;
                   // print("bhair");
                  }
 
