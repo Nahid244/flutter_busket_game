@@ -460,7 +460,10 @@ class Ball {
 
         if(scoreCleanSheet==true){
           score+=scoreIncreaserCleanSheet;
-          Flame.audio.play('cleansheet.mp3');
+          if(soundEnabled){
+            Flame.audio.play('cleansheet.mp3');
+          }
+
           scoreIncreaserCleanSheet*=2;
         }
         else{

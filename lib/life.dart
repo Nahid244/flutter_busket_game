@@ -19,7 +19,7 @@ class Live{
   Live(double w,double h){
    screenW=w;
    screenH=h;
-   life1=Sprite('lives.png');
+   life1=Sprite('heart_life.png');
 
    this.x=w/20;
    this.y=h/30;

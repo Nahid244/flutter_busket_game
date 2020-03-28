@@ -26,8 +26,8 @@ class SoundBut{
     this.y=h/30;
     xWidth=w/10;
     xHeight=h/20;
-    On=Sprite('volOn.png');
-    Off=Sprite('volOff.png');
+    On=Sprite('sound_on.png');
+    Off=Sprite('sound_off.png');
   }
   draw(Canvas c){
     paint=Paint();

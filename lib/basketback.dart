@@ -45,7 +45,7 @@ class BasketBack{
   draw(Canvas c){
     paint=Paint();
     paint1=Paint();
-    paint.color=Color.fromRGBO(0, 0, 0, 0.5);
+    paint.color=Color.fromRGBO(87, 101, 116, 1);
     paint1.color=Color(0xffe8f5f9);
 
    // RRect r=RRect.fromLTRBR(x+10, y+10, xWidth, xHeight-20, Radius.circular(4));

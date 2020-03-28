@@ -185,15 +185,15 @@ class GG extends Game{
            s = "Start";
          }
          TextSpan span1 = new TextSpan(style: TextStyle(
-           fontStyle: FontStyle.italic,
+           fontStyle: FontStyle.normal,
            fontSize: screenSize.width / 6,
            foreground: Paint()
-             ..style = PaintingStyle.stroke
+             ..style = PaintingStyle.fill
              ..strokeWidth = 4
              ..color = Colors.orange,
          ), text: s);
          TextPainter tp1 = new TextPainter(text: span1,
-             textAlign: TextAlign.left,
+             textAlign: TextAlign.center,
              textDirection: TextDirection.ltr);
          tp1.layout();
          if (gameTimer < 150) {
