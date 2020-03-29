@@ -23,6 +23,8 @@ class Ball {
   double screenW;
   double screenH;
 
+  bool mararDirectionErTutoEkbar;
+
   bool rising;
   bool ballrisingShrink;
   bool falling;
@@ -58,7 +60,10 @@ class Ball {
   double initialVelocity;
 
   double groundToballHeight;
+
   double mass;
+  double lowerLimitmass;
+
   int score;
   int pastScore;
   double g=2.3;
@@ -68,6 +73,11 @@ class Ball {
   bool rightrun;
 
   bool scoreUpdated;
+
+  int scorebreakdown;
+  //delete
+
+
   Ball(double w,double h,double r){
     scoreIncreaserCleanSheet=2;
    // b[0]=;
@@ -86,6 +96,7 @@ class Ball {
     pastScore=-1;
     score=0;
     level=1;
+    mararDirectionErTutoEkbar=firstTimeTuto;
     init(w, h, r);
 
   }
@@ -117,6 +128,7 @@ class Ball {
     secondRowHit=false;
 
     mass=1;
+    lowerLimitmass=1;
 
     shootDirection=1;
     ballShootAmount=0;
@@ -126,34 +138,57 @@ class Ball {
 //    }
 
     if(pastScore==score ){
-     // life--;
+      life--;
     }
     pastScore=score;
 
-    if(score>=1 && score<=10 ){
+    if(score>=1 && score<10 ){
       level=2;
       leftrun=true;
       rightrun=false;
 
     }
-    else if(score>=11 && score<=25){
+    else if(score>=10 && score<25){
       level=3;
 
     }
-    else if(score>=26 && score<=40){
+    else if(score>=25 && score<40){
       level=4;
     }
-    else if(score>=40){
+    else if(score>=40 && score<50 ){
       level=5;
+    }
+    else if(score>=50 && score<60 ){
+      level=6;
+    }
+    else if(score>=60 && score<70 ){
+      level=7;
+    }
+    else if(score>=70 && score<80 ){
+      level=8;
+    }
+    else if(score>=80  ){
+      level=9;
     }
     scoreUpdated=false;
 
-    if(level>1 && life>=1){
+    if(score>=5 && life>=1){
       x=Random.secure().nextInt((screenW-radius*2).toInt())+radius;
     }
 
+    if(scoreCleanSheet!=null ){
+      if( scoreCleanSheet){
+        scoreIncreaserCleanSheet*=2;
+      }
+      else{
+        scoreIncreaserCleanSheet=2;
+      }
 
+    }
     scoreCleanSheet=true;
+    scorebreakdown=1;
+
+
 
   }
   void draw(Canvas c){
@@ -168,11 +203,11 @@ class Ball {
    }
    else if(animation.loaded() && shoot==true){
      spriteIndex++;
-     if(spriteIndex>220){
+     if(spriteIndex>484){
        spriteIndex=0;
      }
     // print((spriteIndex/10).ceil());
-     animation.update(spriteIndex.toDouble()/10);
+     animation.update(spriteIndex.toDouble()/22);
      animation.getSprite().renderRect(c, Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2));
 
    }
@@ -196,18 +231,25 @@ class Ball {
     if(shoot){
 
       int hittedBasket=0;
-      if(level<5){
-        mass=sqrt(2*g*(screenH-(basket[0].y-radius*2.5)));
+      if(level!=5){
+      //  if(checkForMassUpdateBelowLevel5){
+          mass=sqrt(2*g*(screenH-(basket[0].y-radius*2.3)));
+
+         // checkForMassUpdateBelowLevel5=false;
+       // }
+
         ballBasketHitCheck(basket[0].x, basket[0].y, basket[0].x+basket[0].xWidth, basket[0].y);
        // scoreUpdate(basket[0].x, basket[0].y, basket[0].x+basket[0].xWidth, basket[0].y);
         scoreChk(basket[0].x, basket[0].y, basket[0].xWidth, basket[0].xHeight);
       }
       else{
-        if(y<basket[1].y-radius*2.5){
-          mass=sqrt(2*g*(screenH-(basket[0].y-radius*2.5)));
+        if(y<basket[1].y-radius*2.5 ){
+          mass=sqrt(2*g*(screenH-(basket[0].y-radius*2.3)));
+
         }
-        else{
-          mass=sqrt(2*g*(screenH-(basket[1].y-radius*2.5)));
+        else if(y>=basket[1].y-radius*2.5 ){
+          mass=sqrt(2*g*(screenH-(basket[1].y-radius*2.3)));
+
         }
 
 
@@ -220,7 +262,7 @@ class Ball {
           }
         }
 
-        if(firstRowHit==false){
+        if(firstRowHit==false && secondRowHit==false){
           //firstRowHit=scoreUpdate(basket[0].x, basket[0].y, basket[0].x+basket[0].xWidth, basket[0].y);
           firstRowHit= scoreChk(basket[0].x, basket[0].y, basket[0].xWidth, basket[0].xHeight);
         }
@@ -264,8 +306,9 @@ class Ball {
           if(basketCollisionHit){
               //shootXdirection=0;
 
+
                if(basketLeftCollision){
-                 ballShootAmount=(radius-(basket[hittedBasket].x-x))/10;
+                 ballShootAmount=(radius-(basket[hittedBasket].x-x).abs())/10;
 
                   if(basket[hittedBasket].x<x ){
 
@@ -293,9 +336,11 @@ class Ball {
                     shootDirection=-2;
                   }
 
+
                }
                else if(basketRightCollision){
-                 ballShootAmount=(radius-(basket[hittedBasket].x+basket[hittedBasket].xWidth-x))/10;
+                 ballShootAmount=(radius-(basket[hittedBasket].x+basket[hittedBasket].xWidth-x).abs())/10;
+
                  if(basket[hittedBasket].x+basket[hittedBasket].xWidth>x ){
 
                   // shootDirectionAfterCollision=-sqrt(velocity).toInt();
@@ -323,6 +368,7 @@ class Ball {
                    shootDirection=2;
                   // print("bhair");
                  }
+
 
                }
 
@@ -404,12 +450,14 @@ class Ball {
         basketCollisionHit = true;
         basketLeftCollision = true;
         basketRightCollision = false;
-      //  if(basketLeftPointY>y+radius*1.5 ){
+     //  if(basketLeftPointY>y+radius*1.5 ){
           rising = true;
           falling = false;
-      //  }
+     //  }
 
         initialVelocity = mass;
+      //  mass--;
+
          scoreCleanSheet=false;
         if(soundEnabled){
         Flame.audio.play('rHoop.mp3');
@@ -421,12 +469,14 @@ class Ball {
         basketCollisionHit=true;
         basketLeftCollision=false;
         basketRightCollision=true;
-     //  if(basketLeftPointY>y+radius*1.5 ){
+    //  if(basketLeftPointY>y+radius*1.5 ){
           rising=true;
           falling=false;
-     //  }
+      // }
 
-        initialVelocity=mass;
+       initialVelocity=mass;
+     //  mass--;
+
         scoreCleanSheet=false;
         if(soundEnabled) {
           Flame.audio.play('rHoop.mp3');
@@ -480,15 +530,17 @@ class Ball {
 
         if(scoreCleanSheet==true){
           score+=scoreIncreaserCleanSheet;
+          scorebreakdown=scoreIncreaserCleanSheet;
           if(soundEnabled){
             Flame.audio.play('cleansheet.mp3');
           }
 
-          scoreIncreaserCleanSheet*=2;
+
         }
         else{
-          scoreIncreaserCleanSheet=2;
+         // scoreIncreaserCleanSheet=2;
           score++;
+          scorebreakdown=1;
         }
 
         scoreUpdated=true;

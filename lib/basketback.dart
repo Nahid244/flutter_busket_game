@@ -46,7 +46,8 @@ class BasketBack{
     paint=Paint();
     paint1=Paint();
     paint.color=Color.fromRGBO(87, 101, 116, 1);
-    paint1.color=Color(0xffe8f5f9);
+   // paint1.color=Color(0xffe8f5f9);
+    paint1.color=Color.fromRGBO(255, 255, 255, 1);
 
    // RRect r=RRect.fromLTRBR(x+10, y+10, xWidth, xHeight-20, Radius.circular(4));
     Rect baskt = Rect.fromLTWH(x, y, xWidth, xHeight);
@@ -65,41 +66,53 @@ class BasketBack{
   update(int level,double w,double h){
 
    if(level==3 || level==5){
-     level3Update(w, h);
+     level3Update(w, h,2);
    }
    else if(level==4){
-     level4Update(w, h);
+     level4Update(w, h,2);
+   }
+   else if(level==6){
+     level3Update(w, h,3);
+   }
+   else if(level==7){
+     level3Update(w, h,4);
+   }
+   else if(level==8){
+     level4Update(w, h,3);
+   }
+   else if(level==9){
+     level4Update(w, h,4);
    }
 
   }
-  level3Update(double w,double h){
+  level3Update(double w,double h,double speed){
     if(leftrun){
-      x-=2;
+      x-=speed;
       if(x<=0){
         leftrun=false;
         rightrun=true;
       }
     }
     else if(rightrun){
-      x+=2;
+      x+=speed;
       if(x>=w-xWidth){
         leftrun=true;
         rightrun=false;
       }
     }
   }
-  level4Update(double w,double h){
+  level4Update(double w,double h,double speed){
     if(leftrun){
       y++;
       if(bottomrun){
-        x-=2;
+        x-=speed;
         if(x<=0){
           toprun=true;
           bottomrun=false;
         }
       }
       else{
-         x+=2;
+         x+=speed;
          if(x>=w-xWidth){
            toprun=false;
            bottomrun=true;
@@ -115,14 +128,14 @@ class BasketBack{
     }
     else if(rightrun){
       if(bottomrun){
-        x-=2;
+        x-=speed;
         if(x<=0){
           toprun=true;
           bottomrun=false;
         }
       }
       else{
-        x+=2;
+        x+=speed;
         if(x>=w-xWidth){
           toprun=false;
           bottomrun=true;

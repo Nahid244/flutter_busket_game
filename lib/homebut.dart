@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/sprite.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_busket_game/publicdata.dart';
 class HomeBut {
 
@@ -13,6 +14,7 @@ class HomeBut {
   Paint paint;
   Rect but;
   Sprite home;
+  Canvas cc;
 
 
   HomeBut(double w, double h) {
@@ -28,6 +30,7 @@ class HomeBut {
   }
 
   draw(Canvas c) {
+   cc=c;
     paint = Paint();
     but = Rect.fromLTWH(x, y, xWidth, xHeight);
 
@@ -37,6 +40,9 @@ class HomeBut {
   }
 
   void onTapped(double x, double y) {
+    if(but.contains(Offset(x, y))){
 
+     print("home clicked");
+    }
   }
 }

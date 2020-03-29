@@ -8,7 +8,7 @@ import 'package:flame/util.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as UI;
 import 'dart:math' as Math;
-import 'package:box2d_flame/box2d.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_busket_game/ball.dart';
 import 'package:flutter_busket_game/basket.dart';
@@ -18,7 +18,11 @@ import 'package:flame/position.dart';
 import 'package:flutter_busket_game/homebut.dart';
 import 'package:flutter_busket_game/life.dart';
 import 'package:flutter_busket_game/publicdata.dart';
+import 'package:flutter_busket_game/score.dart';
+import 'package:flutter_busket_game/scorebreakdown.dart';
 import 'package:flutter_busket_game/soundButton.dart';
+
+import 'directionanimation.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +41,7 @@ void main()async{
   pan.onEnd=game.onPanEnd;
   flameUtil.addGestureRecognizer(pan);
   flameUtil.addGestureRecognizer(tapper);
+
 }
 class GG extends Game{
   Size screenSize;
@@ -60,6 +65,7 @@ class GG extends Game{
 
 
   List<BasketBack> basketback=[];
+  List<ScoreBreakDown> scoreBreakDown=[];
 
   bool shootball=false;
   bool panStartFromRightPos;
@@ -75,7 +81,13 @@ class GG extends Game{
   ///
   int pastLevel;
   int presentLevel;
+
+  DirectionAnimation dirAnim;
+  ScoreBoard scoreBoard;
+
+
   GG(){
+
     initialize();
 
   }
@@ -111,6 +123,10 @@ class GG extends Game{
     soundBut=SoundBut(screenSize.width,screenSize.height);
     hbut=HomeBut(screenSize.width,screenSize.height);
     panStartFromRightPos=false;
+    scoreBreakDown.add(ScoreBreakDown(screenSize.width, screenSize.height));
+    scoreBreakDown.add(ScoreBreakDown(screenSize.width, screenSize.height));
+    dirAnim=DirectionAnimation(screenSize.width, screenSize.height);
+    scoreBoard=ScoreBoard(screenSize.width, screenSize.height);
   }
   @override
   void render(Canvas canvas) {
@@ -120,30 +136,49 @@ class GG extends Game{
        Paint bgPaint = Paint();
 
        // bgPaint.color = Color(0xff576574);
-       bgPaint.color = Color(0xffe8f5f9);
+       bgPaint.color = Color.fromRGBO(255, 255, 255, 1);
        canvas.drawRect(bgRect, bgPaint);
        if(life>=1) {
+
+
+
        basketback[0].draw(canvas);
-       if (ball.level == 5) {
-         basketback[1].draw(canvas);
+       if(ball.level!=5){
+         scoreBreakDown[0].draw(canvas,basket[0].x,basket[0].xWidth,basket[0].y-basket[0].xWidth/2,ball.scoreUpdated,ball.y,ball.scorebreakdown.toString());
        }
 
 
+       if (ball.level == 5) {
+         basketback[1].draw(canvas);
+         scoreBreakDown[0].draw(canvas,basket[0].x,basket[0].xWidth,basket[0].y-basket[0].xWidth/2,ball.firstRowHit,ball.y,ball.scorebreakdown.toString());
+         scoreBreakDown[1].draw(canvas,basket[1].x,basket[1].xWidth,basket[1].y-basket[1].xWidth/2,ball.secondRowHit,ball.y,ball.scorebreakdown.toString());
+       }
+
+       ///scorebreak
+
+
+       ///
        soundBut.draw(canvas);
        live.draw(canvas);
        if (gameTimer > 200 && life >= 1) {
-         TextSpan span = new TextSpan(style: new TextStyle(
-             color: Color.fromRGBO(0, 0, 0, 0.3), fontSize: 60),
-             text: ball.score.toString());
-         TextPainter tp = new TextPainter(text: span,
-             textAlign: TextAlign.left,
-             textDirection: TextDirection.ltr);
-         tp.layout();
-         tp.paint(canvas, new Offset(
-             ballInitalPosX - screenSize.width / 20, screenSize.height / 2));
+         scoreBoard.draw(canvas, ball.score);
+//         TextSpan span = new TextSpan(style: new TextStyle(
+//             color: Color.fromRGBO(0, 0, 0, 0.3), fontSize: 60),
+//             text: ball.score.toString());
+//         TextPainter tp = new TextPainter(text: span,
+//             textAlign: TextAlign.left,
+//             textDirection: TextDirection.ltr);
+//         tp.layout();
+//         tp.paint(canvas, new Offset(
+//             ballInitalPosX - screenSize.width / 20, screenSize.height / 2+screenSize.height / 10));
        }
+
+       if(ball.mararDirectionErTutoEkbar && gameTimer > 200){
+         dirAnim.draw(canvas);
+       }
+
        basket[0].draw(canvas);
-       if (ball.level == 5) {
+       if (ball.level == 5 ) {
          basket[1].draw(canvas);
        }
 
@@ -322,6 +357,7 @@ class GG extends Game{
 
         basketback[0].init(screenSize.width, screenSize.height, true, false,
             screenSize.width / 5, screenSize.height / 10);
+
         basketback[1].init(screenSize.width, screenSize.height, false, true,
             screenSize.width / 5,
             screenSize.height / 3 + screenSize.height / 40);
@@ -378,10 +414,12 @@ class GG extends Game{
        Flame.audio.play('swipe.mp3');
         //Flame.audio.play('lHoop.mp3');
       }
+      ball.mararDirectionErTutoEkbar=false;
     }
   }
   void onTapDown(TapDownDetails d){
     soundBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+    hbut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
   }
 
 }
