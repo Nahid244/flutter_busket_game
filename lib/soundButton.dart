@@ -24,8 +24,8 @@ class SoundBut{
 
     this.x=w-w/6;
     this.y=h/30;
-    xWidth=w/10;
-    xHeight=h/24;
+    xWidth=w/14;
+    xHeight=h/28;
     On=Sprite('sound_on.png');
     Off=Sprite('sound_off_new.png');
   }

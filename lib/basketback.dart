@@ -17,6 +17,9 @@ class BasketBack{
   bool rightrun;
   bool toprun;
   bool bottomrun;
+  double lastLevelSpeed;
+  bool lastLevelSpeedUpdated;
+  int pastScore;
   BasketBack(double w,double h,bool l,bool r,double PosX,double PosY){
 
     init(w,h,l,r,PosX,PosY);
@@ -29,7 +32,10 @@ class BasketBack{
 //    initPosY=h/20;
 //    this.x=w/5;
 //    this.y=h/10;
+  lastLevelSpeed=4;
+    lastLevelSpeedUpdated=false;
 
+    pastScore=91;
     initPosX=PosX;
     initPosY=PosY;
     this.x=PosX;
@@ -63,7 +69,7 @@ class BasketBack{
    // c.drawRRect(r, paint1);
 
   }
-  update(int level,double w,double h){
+  update(int level,double w,double h,int score){
 
    if(level==3 || level==5){
      level3Update(w, h,2);
@@ -79,9 +85,20 @@ class BasketBack{
    }
    else if(level==8){
      level4Update(w, h,3);
+
    }
    else if(level==9){
-     level4Update(w, h,4);
+     if((score-pastScore)==10 && lastLevelSpeedUpdated){
+       lastLevelSpeed+=1;
+       print(lastLevelSpeed);
+       lastLevelSpeedUpdated=false;
+       print(lastLevelSpeed);
+       pastScore=score;
+     }
+     else if((score-pastScore)!=10){
+       lastLevelSpeedUpdated=true;
+     }
+     level4Update(w, h,lastLevelSpeed);
    }
 
   }

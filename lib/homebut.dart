@@ -11,10 +11,19 @@ class HomeBut {
   double xHeight;
   double screenW;
   double screenH;
-  Paint paint;
+
   Rect but;
   Sprite home;
-  Canvas cc;
+  Sprite gamePlan;
+  Rect gamePlanRect;
+
+
+
+  Rect bgBlack;
+  Paint bgBlackPaint;
+
+  Rect board;
+  Paint boardPaint;
 
 
   HomeBut(double w, double h) {
@@ -22,27 +31,41 @@ class HomeBut {
     screenH = h;
 
     this.x = w/2.2;
-    this.y = h / 2+h/5;
+    this.y = h *.58;
     xWidth = w / 10;
     xHeight = h / 20;
     home = Sprite('home.png');
+    gamePlan=Sprite('gameplan.png');
+    gamePlanRect=Rect.fromLTWH(w/5, h*.35, xWidth*1.5, xHeight*1.5);
 
+    bgBlack=Rect.fromLTWH(0, 0, w, h);
+    bgBlackPaint=Paint();
+    bgBlackPaint.color=Color.fromRGBO(0, 0, 0, 0.5);
+
+    board=Rect.fromLTWH(w/6, h/3, w*.70, h/3);
+    boardPaint=Paint();
+    boardPaint.color=Color.fromRGBO(255, 255, 255, 1);
   }
 
   draw(Canvas c) {
-   cc=c;
-    paint = Paint();
+
+   c.drawRect(bgBlack, bgBlackPaint);
+   c.drawRRect(RRect.fromRectAndRadius(board, Radius.circular(40)), boardPaint);
     but = Rect.fromLTWH(x, y, xWidth, xHeight);
 
       home.renderRect(c, but);
+      gamePlan.renderRect(c, gamePlanRect);
 
 
   }
 
-  void onTapped(double x, double y) {
+  bool onTapped(double x, double y) {
+    bool kireturnkorbo=false;
     if(but.contains(Offset(x, y))){
 
      print("home clicked");
+     kireturnkorbo=true;
     }
+    return kireturnkorbo;
   }
 }

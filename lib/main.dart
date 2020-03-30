@@ -84,7 +84,9 @@ class GG extends Game{
 
   DirectionAnimation dirAnim;
   ScoreBoard scoreBoard;
-
+/////////
+  Rect bgRect;
+  Paint bgPaint;
 
   GG(){
 
@@ -96,18 +98,21 @@ class GG extends Game{
   void initialize() async {
 
     resize(await Flame.util.initialDimensions());
-   gameTimer=0;
-
+    init();
+  }
+  void init(){
+    gameTimer=0;
+    life=3;
     live=Live(screenSize.width,screenSize.height);
 
 
     ball=Ball(screenSize.width,screenSize.height,screenSize.width/7);
-   // basket=Basket(screenSize.width,screenSize.height);
+    // basket=Basket(screenSize.width,screenSize.height);
 
-     basket.add(Basket(screenSize.width,screenSize.height));
+    basket.add(Basket(screenSize.width,screenSize.height));
     basket.add(Basket(screenSize.width,screenSize.height));
 
-   // basketback=BasketBack(screenSize.width, screenSize.height,true,false);
+    // basketback=BasketBack(screenSize.width, screenSize.height,true,false);
 
     basketback.add(BasketBack(screenSize.width, screenSize.height,true,false,screenSize.width/5,screenSize.height/10));
 
@@ -127,16 +132,20 @@ class GG extends Game{
     scoreBreakDown.add(ScoreBreakDown(screenSize.width, screenSize.height));
     dirAnim=DirectionAnimation(screenSize.width, screenSize.height);
     scoreBoard=ScoreBoard(screenSize.width, screenSize.height);
+
+    //////
+    bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
+    bgPaint = Paint();
+    bgPaint.color = Color.fromRGBO(255, 255, 255, 1);
   }
   @override
   void render(Canvas canvas) {
 
        // TODO: implement render
-       Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
-       Paint bgPaint = Paint();
+
 
        // bgPaint.color = Color(0xff576574);
-       bgPaint.color = Color.fromRGBO(255, 255, 255, 1);
+
        canvas.drawRect(bgRect, bgPaint);
        if(life>=1) {
 
@@ -272,7 +281,7 @@ class GG extends Game{
 //       shadowPaint.color = Color.fromRGBO(0, 0, 0, 0.3);
 //       canvas.drawOval(shadow, shadowPaint);
 
-
+         ball.draw(canvas);
        TextSpan span1 = new TextSpan(style: TextStyle(
          fontStyle: FontStyle.italic,
          fontSize: screenSize.width / 15,
@@ -308,7 +317,7 @@ class GG extends Game{
 //       g.renderRect(canvas, Rect.fromLTWH(
 //           ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2,
 //           ball.radius * 2));
-         ball.draw(canvas);
+
      }
 
      ////just checking
@@ -365,11 +374,11 @@ class GG extends Game{
       pastLevel = presentLevel;
 
       ball.update( basket);
-      basketback[0].update(ball.level, screenSize.width, screenSize.height);
+      basketback[0].update(ball.level, screenSize.width, screenSize.height,ball.score);
 
       // basketback[1].update(ball.level,screenSize.width,screenSize.height);
       if (ball.level == 5) {
-        basketback[1].update(ball.level, screenSize.width, screenSize.height);
+        basketback[1].update(ball.level, screenSize.width, screenSize.height,ball.score);
       }
       basket[0].update(ball.level, basketback[0]);
 
@@ -399,7 +408,7 @@ class GG extends Game{
    //  print((panFingerPosX-ballInitalPosX)/10);
    // print(screenSize.height);
 
-    if(panStartFromRightPos && ball.shoot==false && gameTimer>200){
+    if(panStartFromRightPos && ball.shoot==false && gameTimer>200 ){
      // ballShootDirection=(panFingerPosX-ball.x)/10;
       if(panFingerPosX-panStartFingerPosX>0){
         ball.shootDirection=1;
@@ -419,7 +428,13 @@ class GG extends Game{
   }
   void onTapDown(TapDownDetails d){
     soundBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
-    hbut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+    if(life<=0){
+      bool tmp=hbut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+      if(tmp){
+       init();
+      }
+    }
+
   }
 
 }

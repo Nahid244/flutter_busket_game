@@ -22,9 +22,9 @@ class Live{
    life1=Sprite('heart_life.png');
 
    this.x=w/20;
-   this.y=h/30;
-   xWidth=w/12;
-   xHeight=h/24;
+   this.y=h/25;
+   xWidth=w/16;
+   xHeight=h/32;
 
   }
   draw(Canvas c){
