@@ -16,6 +16,7 @@ class ScoreBoard{
   double xHeight;
   Sprite Score;
 
+  double scoreYPos;
 
   ScoreBoard(double w,double h){
     screenW=w;
@@ -26,7 +27,7 @@ class ScoreBoard{
     this.y=h/48;
     xWidth=w/4;
     xHeight=h/18;
-
+    scoreYPos=h/40;
   }
   draw(Canvas c,int score){
     String s=score.toString();
@@ -40,13 +41,13 @@ class ScoreBoard{
              textDirection: TextDirection.ltr);
          tp.layout();
       if(s.length==1){
-        tp.paint(c, new Offset(x+screenW / 10,y));
+        tp.paint(c, new Offset(x+screenW / 10,scoreYPos));
       }
       else if(s.length==2){
-        tp.paint(c, new Offset(x+screenW / 13,y));
+        tp.paint(c, new Offset(x+screenW / 13,scoreYPos));
       }
       else{
-        tp.paint(c, new Offset(x+screenW / 16,y));
+        tp.paint(c, new Offset(x+screenW / 16,scoreYPos));
       }
 
 

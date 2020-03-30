@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/animation.dart';
 import 'package:flame/spritesheet.dart';
+import 'package:flutter_busket_game/publicdata.dart';
 
 
 
@@ -62,8 +63,12 @@ class DirectionAnimation{
     paint.color=Color.fromRGBO(0,0,0, 0.6);
 
    // c.rotate(0.3);
+    if(gamePause==false){
       index++;
-    index1++;
+      j=index/5;
+    }
+
+
  //  print(index%200);
 //
 //       TextSpan span7 = new TextSpan(style: new TextStyle( fontSize: screenW / 20,color: Color.fromRGBO(0,0,0, 0.6)), text: "SWIPE");
@@ -73,7 +78,7 @@ class DirectionAnimation{
 
 
 
-    j=index/5;
+
 
 
     hand.getSprite(i.toInt(),j.toInt()).renderRect(c, Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2));

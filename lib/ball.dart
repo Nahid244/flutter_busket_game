@@ -75,11 +75,13 @@ class Ball {
   bool scoreUpdated;
 
   int scorebreakdown;
+  bool ekthrowAKonoCollision;
   //delete
 
 
   Ball(double w,double h,double r){
     scoreIncreaserCleanSheet=2;
+    ekthrowAKonoCollision=false;
    // b[0]=;
   // b=Sprite('aa.png');
    spritesheet = SpriteSheet(
@@ -136,6 +138,18 @@ class Ball {
 //    if(scoreUpdated==false){
 //      score=0;
 //    }
+    scoreCleanSheet=true;
+
+    if(ekthrowAKonoCollision==false &&  pastScore!=score && pastScore!=-1) {
+      scoreIncreaserCleanSheet *= 2;
+    }
+      else{
+        scoreIncreaserCleanSheet=2;
+      }
+      ekthrowAKonoCollision=false;
+
+
+
 
     if(pastScore==score ){
       life--;
@@ -176,16 +190,9 @@ class Ball {
       x=Random.secure().nextInt((screenW-radius*2).toInt())+radius;
     }
 
-    if(scoreCleanSheet!=null ){
-      if( scoreCleanSheet){
-        scoreIncreaserCleanSheet*=2;
-      }
-      else{
-        scoreIncreaserCleanSheet=2;
-      }
 
-    }
-    scoreCleanSheet=true;
+
+
     scorebreakdown=1;
 
 
@@ -202,13 +209,18 @@ class Ball {
      animation.getSprite().renderRect(c, Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2));
    }
    else if(animation.loaded() && shoot==true){
-     spriteIndex++;
-     if(spriteIndex>484){
-       spriteIndex=0;
+     if(gamePause==false){
+       spriteIndex++;
+       if(spriteIndex>484){
+         spriteIndex=0;
+     }
      }
     // print((spriteIndex/10).ceil());
-     animation.update(spriteIndex.toDouble()/22);
-     animation.getSprite().renderRect(c, Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2));
+
+       animation.update(spriteIndex.toDouble()/22);
+       animation.getSprite().renderRect(c, Rect.fromLTWH(x - radius, y - radius, radius * 2, radius * 2));
+
+
 
    }
 
@@ -457,7 +469,7 @@ class Ball {
 
         initialVelocity = mass;
       //  mass--;
-
+        ekthrowAKonoCollision=true;
          scoreCleanSheet=false;
         if(soundEnabled){
         Flame.audio.play('rHoop.mp3');
@@ -476,7 +488,7 @@ class Ball {
 
        initialVelocity=mass;
      //  mass--;
-
+        ekthrowAKonoCollision=true;
         scoreCleanSheet=false;
         if(soundEnabled) {
           Flame.audio.play('rHoop.mp3');

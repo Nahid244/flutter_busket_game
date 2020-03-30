@@ -15,6 +15,8 @@ import 'package:flutter_busket_game/basket.dart';
 import 'package:flutter_busket_game/basketback.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flame/position.dart';
+import 'package:flutter_busket_game/cross.dart';
+import 'package:flutter_busket_game/crosspop.dart';
 import 'package:flutter_busket_game/homebut.dart';
 import 'package:flutter_busket_game/life.dart';
 import 'package:flutter_busket_game/publicdata.dart';
@@ -32,6 +34,7 @@ void main()async{
   GG game=GG();
 
   runApp(game.widget);
+
   PanGestureRecognizer pan=PanGestureRecognizer();
   TapGestureRecognizer tapper = TapGestureRecognizer();
   tapper.onTapDown = game.onTapDown;
@@ -47,8 +50,15 @@ class GG extends Game{
   Size screenSize;
 
 
-   int gameTimer;
+  @override
+  void onAttach() {
+
+  }
+
+  int gameTimer;
   SoundBut soundBut;
+  CrossBut crossBut;
+  CrossButPop crossButPop;
   HomeBut hbut;
   Live live;
   Ball ball;
@@ -103,6 +113,13 @@ class GG extends Game{
   void init(){
     gameTimer=0;
     life=3;
+
+     soundEnabled=true;
+    firstTimeTuto=true;
+
+     playerName="Rohim";
+    gamePause=false;
+
     live=Live(screenSize.width,screenSize.height);
 
 
@@ -132,7 +149,8 @@ class GG extends Game{
     scoreBreakDown.add(ScoreBreakDown(screenSize.width, screenSize.height));
     dirAnim=DirectionAnimation(screenSize.width, screenSize.height);
     scoreBoard=ScoreBoard(screenSize.width, screenSize.height);
-
+   crossBut=CrossBut(screenSize.width, screenSize.height);
+    crossButPop=CrossButPop(screenSize.width, screenSize.height);
     //////
     bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
     bgPaint = Paint();
@@ -168,6 +186,7 @@ class GG extends Game{
 
        ///
        soundBut.draw(canvas);
+
        live.draw(canvas);
        if (gameTimer > 200 && life >= 1) {
          scoreBoard.draw(canvas, ball.score);
@@ -220,7 +239,7 @@ class GG extends Game{
          }
        }
 
-       if (gameTimer <= 200) {
+       if (gameTimer <= 200 ) {
          String s;
          if (gameTimer < 150) {
            s = (4 - (gameTimer / 50).ceil()).toString();
@@ -248,24 +267,29 @@ class GG extends Game{
            tp1.paint(canvas,
                new Offset(screenSize.width / 3.4, screenSize.height / 2));
          }
+       }else if(gamePause==false){
+         crossBut.draw(canvas);
        }
 
-       if (life <= 0) {
-         String s = "Score : " + ball.score.toString();
-         TextSpan span2 = new TextSpan(style: TextStyle(
-           fontStyle: FontStyle.italic,
-           fontSize: screenSize.width / 6,
-           foreground: Paint()
-             ..style = PaintingStyle.stroke
-             ..strokeWidth = 4
-             ..color = Colors.green,
-         ), text: s);
-         TextPainter tp2 = new TextPainter(text: span2,
-             textAlign: TextAlign.left,
-             textDirection: TextDirection.ltr);
-         tp2.layout();
-         tp2.paint(
-             canvas, new Offset(screenSize.width / 6, screenSize.height / 2));
+//       if (life <= 0) {
+//         String s = "Score : " + ball.score.toString();
+//         TextSpan span2 = new TextSpan(style: TextStyle(
+//           fontStyle: FontStyle.italic,
+//           fontSize: screenSize.width / 6,
+//           foreground: Paint()
+//             ..style = PaintingStyle.stroke
+//             ..strokeWidth = 4
+//             ..color = Colors.green,
+//         ), text: s);
+//         TextPainter tp2 = new TextPainter(text: span2,
+//             textAlign: TextAlign.left,
+//             textDirection: TextDirection.ltr);
+//         tp2.layout();
+//         tp2.paint(
+//             canvas, new Offset(screenSize.width / 6, screenSize.height / 2));
+//       }
+       if(gamePause){
+         crossButPop.draw(canvas);
        }
      }
      else{
@@ -282,38 +306,38 @@ class GG extends Game{
 //       canvas.drawOval(shadow, shadowPaint);
 
          ball.draw(canvas);
-       TextSpan span1 = new TextSpan(style: TextStyle(
-         fontStyle: FontStyle.italic,
-         fontSize: screenSize.width / 15,
-         foreground: Paint()
-           ..style = PaintingStyle.fill
-           ..strokeWidth = 6
-           ..color = Color.fromRGBO(0, 0, 0, 0.4),
-       ), text: "Your Score");
-       TextPainter tp1 = new TextPainter(text: span1,
-           textAlign: TextAlign.left,
-           textDirection: TextDirection.ltr);
-       tp1.layout();
-       tp1.paint(canvas, new Offset(screenSize.width / 3, screenSize.height / 2));
+//       TextSpan span1 = new TextSpan(style: TextStyle(
+//         fontStyle: FontStyle.italic,
+//         fontSize: screenSize.width / 15,
+//         foreground: Paint()
+//           ..style = PaintingStyle.fill
+//           ..strokeWidth = 6
+//           ..color = Color.fromRGBO(0, 0, 0, 0.4),
+//       ), text: "Your Score");
+//       TextPainter tp1 = new TextPainter(text: span1,
+//           textAlign: TextAlign.left,
+//           textDirection: TextDirection.ltr);
+//       tp1.layout();
+//       tp1.paint(canvas, new Offset(screenSize.width / 3, screenSize.height / 2));
 
-       double divided_by;
-       String scoreString=ball.score.toString();
-       divided_by=1.4+ball.score.toString().length;
-
-       TextSpan span2 = new TextSpan(style: TextStyle(
-         fontStyle: FontStyle.italic,
-         fontSize: screenSize.width / 7,
-         foreground: Paint()
-           ..style = PaintingStyle.fill
-           ..strokeWidth = 6
-           ..color = Colors.orange,
-       ), text: (ball.score).toString());
-       TextPainter tp2 = new TextPainter(text: span2,
-           textAlign: TextAlign.left,
-           textDirection: TextDirection.ltr);
-       tp2.layout();
-       tp2.paint(canvas, new Offset(screenSize.width / divided_by, screenSize.height / 2+screenSize.height / 20));
-       hbut.draw(canvas);
+//       double divided_by;
+//       String scoreString=ball.score.toString();
+//       divided_by=1.4+ball.score.toString().length;
+//
+//       TextSpan span2 = new TextSpan(style: TextStyle(
+//         fontStyle: FontStyle.italic,
+//         fontSize: screenSize.width / 7,
+//         foreground: Paint()
+//           ..style = PaintingStyle.fill
+//           ..strokeWidth = 6
+//           ..color = Colors.orange,
+//       ), text: (ball.score).toString());
+//       TextPainter tp2 = new TextPainter(text: span2,
+//           textAlign: TextAlign.left,
+//           textDirection: TextDirection.ltr);
+//       tp2.layout();
+//       tp2.paint(canvas, new Offset(screenSize.width / divided_by, screenSize.height / 2+screenSize.height / 20));
+       hbut.draw(canvas,ball.score);
 //       g.renderRect(canvas, Rect.fromLTWH(
 //           ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2,
 //           ball.radius * 2));
@@ -351,40 +375,46 @@ class GG extends Game{
 
   @override
   void update(double t) {
-    if(life>=1) {
-      gameTimer++;
-      // TODO: implement update
+    //print(t);
+
+    if(gamePause==false) {
+      if (life >= 1) {
+        gameTimer++;
+        // TODO: implement update
 //    basketLeftPointX=basket.x;
 //    basketLeftPointY=basket.y;
 //    basketRightPointX=basket.x+basket.xWidth;
 //    basketRightPointY=basket.y;
 
-      presentLevel = ball.level;
-      if (presentLevel != pastLevel) {
-        basket[0].init(screenSize.width, screenSize.height);
-        basket[1].init(screenSize.width, screenSize.height);
+        presentLevel = ball.level;
+        if (presentLevel != pastLevel) {
+          basket[0].init(screenSize.width, screenSize.height);
+          basket[1].init(screenSize.width, screenSize.height);
 
-        basketback[0].init(screenSize.width, screenSize.height, true, false,
-            screenSize.width / 5, screenSize.height / 10);
+          basketback[0].init(screenSize.width, screenSize.height, true, false,
+              screenSize.width / 5, screenSize.height / 10);
 
-        basketback[1].init(screenSize.width, screenSize.height, false, true,
-            screenSize.width / 5,
-            screenSize.height / 3 + screenSize.height / 40);
-      }
-      pastLevel = presentLevel;
+          basketback[1].init(screenSize.width, screenSize.height, false, true,
+              screenSize.width / 5,
+              screenSize.height / 3 + screenSize.height / 40);
+        }
+        pastLevel = presentLevel;
 
-      ball.update( basket);
-      basketback[0].update(ball.level, screenSize.width, screenSize.height,ball.score);
+        ball.update(basket);
+        basketback[0].update(
+            ball.level, screenSize.width, screenSize.height, ball.score);
 
-      // basketback[1].update(ball.level,screenSize.width,screenSize.height);
-      if (ball.level == 5) {
-        basketback[1].update(ball.level, screenSize.width, screenSize.height,ball.score);
-      }
-      basket[0].update(ball.level, basketback[0]);
+        // basketback[1].update(ball.level,screenSize.width,screenSize.height);
+        if (ball.level == 5) {
+          basketback[1].update(
+              ball.level, screenSize.width, screenSize.height, ball.score);
+        }
+        basket[0].update(ball.level, basketback[0]);
 
-      // basket[1].update(ball.level,basketback[1]);
-      if (ball.level == 5) {
-        basket[1].update(ball.level, basketback[1]);
+        // basket[1].update(ball.level,basketback[1]);
+        if (ball.level == 5) {
+          basket[1].update(ball.level, basketback[1]);
+        }
       }
     }
   }
@@ -408,7 +438,7 @@ class GG extends Game{
    //  print((panFingerPosX-ballInitalPosX)/10);
    // print(screenSize.height);
 
-    if(panStartFromRightPos && ball.shoot==false && gameTimer>200 ){
+    if(panStartFromRightPos && ball.shoot==false && gameTimer>200 && gamePause==false){
      // ballShootDirection=(panFingerPosX-ball.x)/10;
       if(panFingerPosX-panStartFingerPosX>0){
         ball.shootDirection=1;
@@ -427,13 +457,32 @@ class GG extends Game{
     }
   }
   void onTapDown(TapDownDetails d){
-    soundBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+    if(gamePause==false){
+      soundBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+    }
+    if(gamePause){
+      crossButPop.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+    }
+
     if(life<=0){
       bool tmp=hbut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
       if(tmp){
-       init();
+      // init();
+
+
+      }
+
+    }
+    if(life>=1){
+      if(gamePause==false && gameTimer>=200){
+          crossBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
       }
     }
+
+  }
+
+  @override
+  void onDetach() {
 
   }
 

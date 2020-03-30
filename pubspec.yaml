@@ -55,6 +55,7 @@ flutter:
        - assets/images/aa.png
        - assets/images/Ball_Sprite.png
        - assets/images/home.png
+       - assets/images/banner.png
        - assets/images/gameplan.png
        - assets/images/basketball_sprite.png
        - assets/images/lives.png
@@ -67,6 +68,7 @@ flutter:
        - assets/images/spHand.png
        - assets/images/sound_on.png
        - assets/images/volOn.png
+       - assets/images/cross.png
        - assets/images/1.png
        - assets/images/2.png
        - assets/images/3.png
