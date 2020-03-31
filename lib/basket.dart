@@ -10,9 +10,14 @@ class Basket {
   double screenW;
   double screenH;
 
+  double updateInX;
+  double updateInY;
+
   Paint paint;
   bool leftrun;
   bool rightrun;
+
+  Rect baskt;
   Basket(double w,double h){
 
     init(w,h);
@@ -26,11 +31,15 @@ class Basket {
     xHeight=h/100;
     leftrun=true;
     rightrun=false;
-  }
-  draw(Canvas c){
     paint=Paint();
     paint.color=Color.fromRGBO(255,99,71, 1);
-    Rect baskt = Rect.fromLTWH(x, y, xWidth, xHeight);
+    updateInX=screenW/5-screenW/49;
+    updateInY=screenH/11+screenH/11;
+
+  }
+  draw(Canvas c){
+    baskt = Rect.fromLTWH(x, y, xWidth, xHeight);
+
     c.drawRRect(RRect.fromRectAndRadius(baskt, Radius.circular(20)), paint);
 
 
@@ -39,13 +48,13 @@ class Basket {
     leftrun=basketback.leftrun;
     rightrun=basketback.rightrun;
   // if(level==3 || level==5){
-x=basketback.x+screenW/5-screenW/49;
-y=basketback.y+screenH/11+screenH/11;
+x=basketback.x+updateInX;
+y=basketback.y+updateInY;
 
  //  }
  //  else if(level==4){
-     x=basketback.x+screenW/5-screenW/49;
-     y=basketback.y+screenH/11+screenH/11;
+  //   x=basketback.x+screenW/5-screenW/49;
+   //  y=basketback.y+screenH/11+screenH/11;
   // }
   }
 

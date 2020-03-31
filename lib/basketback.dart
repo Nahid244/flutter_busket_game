@@ -88,14 +88,15 @@ class BasketBack{
 
    }
    else if(level==9){
-     if((score-pastScore)==10 && lastLevelSpeedUpdated){
+     print('speed $lastLevelSpeed pastscore $pastScore bool $lastLevelSpeedUpdated');
+     if((score-pastScore)>=10 && lastLevelSpeedUpdated){
        lastLevelSpeed+=1;
        print(lastLevelSpeed);
        lastLevelSpeedUpdated=false;
        print(lastLevelSpeed);
        pastScore=score;
      }
-     else if((score-pastScore)!=10){
+     else if((score-pastScore)<10){
        lastLevelSpeedUpdated=true;
      }
      level4Update(w, h,lastLevelSpeed);

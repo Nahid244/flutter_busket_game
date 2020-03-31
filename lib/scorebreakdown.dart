@@ -15,7 +15,7 @@ class ScoreBreakDown{
   double xWidth;
   double xHeight;
 
-
+  double fontSize;
 
   ScoreBreakDown(double w,double h){
     screenW=w;
@@ -26,6 +26,7 @@ class ScoreBreakDown{
     this.y=h/30;
     xWidth=w/12;
     xHeight=h/24;
+    fontSize=w/16;
     init();
   }
   init(){
@@ -35,7 +36,7 @@ class ScoreBreakDown{
 
 
           if(scoreUpdated){
-            TextSpan span5 = new TextSpan(style: new TextStyle( fontSize: screenW / 16,color:Color.fromRGBO(0, 0, 0, 0.5)), text: "+"+s);
+            TextSpan span5 = new TextSpan(style: new TextStyle( fontSize: fontSize,color:Color.fromRGBO(0, 0, 0, 0.5)), text: "+"+s);
             TextPainter tp5 = new TextPainter(text: span5, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
             tp5.layout();
 
