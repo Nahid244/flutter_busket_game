@@ -12,131 +12,203 @@ class HomeBut {
   double screenW;
   double screenH;
 
-  Rect but;
-  Sprite home;
-  Sprite gamePlan;
 
+
+  Sprite home;
+  Rect but;
+  Sprite gamePlan;
   Rect gamePlanRect;
 
-  Sprite banner;
-  Rect bannerRect;
+  Sprite bg;
+  Rect bgRect;
+  Sprite basketBg;
+  Rect basketBgRect;
 
+//  Sprite banner;
+//  Rect bannerRect;
+//
+//
+//  Rect bgBlack;
+//  Paint bgBlackPaint;
+//
+//  Rect board;
+//  Paint boardPaint;
+//
+//  Rect outerBoard;
+//  Paint outerBoardPaint;
 
-  Rect bgBlack;
-  Paint bgBlackPaint;
-
-  Rect board;
-  Paint boardPaint;
-
-  Rect outerBoard;
-  Paint outerBoardPaint;
-
-  TextSpan yName;
+  TextSpan gameOver;
   TextPainter tp1;
   TextSpan yScore;
   TextPainter tp2;
-  TextSpan SScore;
+
   TextPainter tp3;
+  TextSpan yName;
+  TextSpan SScore;
+  TextPainter tp4;
 
+//  TextSpan hbut;
+//  TextPainter tp4;
 
+ // String test="00";
 
   HomeBut(double w, double h) {
     screenW = w;
     screenH = h;
 
-    this.x = w/2.2;
-    this.y = h *.58;
-    xWidth = w / 10;
-    xHeight = w / 10;
-    home = Sprite('home.png');
-    gamePlan=Sprite('gameplan.png');
-    gamePlanRect=Rect.fromLTWH(w/5, h*.35, xWidth, xHeight);
+    this.x = w*.4;
+    this.y = h *.7;
+    xWidth = w / 7;
+    xHeight = w / 7;
+    but = Rect.fromLTWH(x, y, xWidth, xHeight);
+    home = Sprite('homepop.png');
+    bg=Sprite("popbg.png");
+    bgRect=Rect.fromLTWH(0, 0, w, h);
 
-    banner=Sprite('banner.png');
-    bannerRect=Rect.fromLTWH(w*.35, h*.30, xWidth*3.5, xHeight*1.5);
+    basketBg=Sprite("basketpop.png");
+    basketBgRect=Rect.fromLTWH(0,0 , w*.50, h*.3);
 
-    bgBlack=Rect.fromLTWH(0, 0, w, h);
-    bgBlackPaint=Paint();
-    bgBlackPaint.color=Color.fromRGBO(0, 0, 0, 0.5);
-   // bgBlackPaint.maskFilter=MaskFilter.blur(BlurStyle.outer, 50);
+    gamePlan=Sprite('gameplannew.png');
+    gamePlanRect=Rect.fromLTWH(w-(w/5)*1.2, h-(w/5), (w/5), (w/5));
 
-    board=Rect.fromLTWH(w/6, h/3, w*.70, h/3);
-    boardPaint=Paint();
-    boardPaint.color=Color.fromRGBO(255, 255, 255, 1);
-
-    outerBoard=Rect.fromLTWH(w/6-w/100, h/3-w/100, w*.70+w/50, h/3+w/50);
-    outerBoardPaint=Paint();
-    outerBoardPaint.color=Color.fromRGBO(0, 0, 0, 1);
+//    banner=Sprite('banner.png');
+//    bannerRect=Rect.fromLTWH(w*.35, h*.30, (w/10)*3.5, xHeight*1.5);
+//
+//    bgBlack=Rect.fromLTWH(0, 0, w, h);
+//    bgBlackPaint=Paint();
+//    bgBlackPaint.color=Color.fromRGBO(0, 0, 0, 0.5);
+//   // bgBlackPaint.maskFilter=MaskFilter.blur(BlurStyle.outer, 50);
+//
+//    board=Rect.fromLTWH(w/6, h/3, w*.70, h/3);
+//    boardPaint=Paint();
+//    boardPaint.color=Color.fromRGBO(255, 255, 255, 1);
+//
+//    outerBoard=Rect.fromLTWH(w/6-w/200, h/3-h/400, w*.70+w/110, h/3+h/200);
+//    outerBoardPaint=Paint();
+//    outerBoardPaint.color=Color.fromRGBO(0, 0, 0, 1);
 
     //
-
-     yName = new TextSpan(style: TextStyle(
+//
+    gameOver = new TextSpan(style: TextStyle(
+      fontFamily: "font1",
       fontStyle: FontStyle.normal,
-      fontSize: w/ 25,
+      fontSize: w/ 7,
       foreground: Paint()
         ..style = PaintingStyle.fill
         ..strokeWidth = 6
-        ..color = Color.fromRGBO(0, 0, 0, 1),
-    ), text: "Your Name : "+playerName);
-     tp1 = new TextPainter(text: yName,
+        ..color = Color.fromRGBO(255, 255, 255, 1),
+    ), text: "GAME OVER");
+     tp1 = new TextPainter(text: gameOver,
         textAlign: TextAlign.left,
         textDirection: TextDirection.ltr);
     tp1.layout();
 
-   yScore  = new TextSpan(style: TextStyle(
+    yName = new TextSpan(style: TextStyle(
+      fontFamily: "font1",
       fontStyle: FontStyle.normal,
-      fontSize: w/ 25,
+      fontSize: w/ 8,
       foreground: Paint()
         ..style = PaintingStyle.fill
         ..strokeWidth = 6
-        ..color = Color.fromRGBO(0, 0, 0, 1),
-    ), text: "Your Score  ");
-    tp2 = new TextPainter(text: yScore,
+        ..color = Color.fromRGBO(255, 255, 255, 1),
+    ), text: playerName);
+    tp2 = new TextPainter(text: yName,
         textAlign: TextAlign.left,
         textDirection: TextDirection.ltr);
     tp2.layout();
 
+    yScore = new TextSpan(style: TextStyle(
+      fontFamily: "font1",
+      fontStyle: FontStyle.normal,
+      fontSize: w/ 6.8,
+      foreground: Paint()
+        ..style = PaintingStyle.fill
+        ..strokeWidth = 6
+        ..color = Color.fromRGBO(255, 255, 255, 1),
+    ), text:"Score");
+    tp3 = new TextPainter(text: yScore,
+        textAlign: TextAlign.left,
+        textDirection: TextDirection.ltr);
+    tp3.layout();
 
 
+//
+//   yScore  = new TextSpan(style: TextStyle(
+//      fontStyle: FontStyle.normal,
+//      fontSize: w/ 25,
+//      foreground: Paint()
+//        ..style = PaintingStyle.fill
+//        ..strokeWidth = 6
+//        ..color = Color.fromRGBO(0, 0, 0, 1),
+//    ), text: "Your Score  ");
+//    tp2 = new TextPainter(text: yScore,
+//        textAlign: TextAlign.left,
+//        textDirection: TextDirection.ltr);
+//    tp2.layout();
+
+
+//    hbut  = new TextSpan(style: TextStyle(
+//      fontStyle: FontStyle.normal,
+//      fontSize: w/ 25,
+//      foreground: Paint()
+//        ..style = PaintingStyle.fill
+//        ..strokeWidth = 6
+//        ..color = Color.fromRGBO(255, 255, 255, 1),
+//    ), text: "Home");
+//    tp4 = new TextPainter(text: hbut,
+//        textAlign: TextAlign.left,
+//        textDirection: TextDirection.ltr);
+//    tp4.layout();
 
 
 }
 
   draw(Canvas c,int score) {
+    int length=playerName.length;
+     bg.renderRect(c, bgRect);
+     basketBg.renderRect(c, basketBgRect);
+     gamePlan.renderRect(c, gamePlanRect);
+     home.renderRect(c, but);
+      tp1.paint(c, new Offset(screenW *.03, screenH *.31));
+     tp2.paint(c, new Offset(screenW *.5-(length*(screenW/8))/3.1, screenH *.40));//(font size:screenW/8)
+     tp3.paint(c, new Offset(screenW *.28, screenH *.50));
+//   c.drawRect(bgBlack, bgBlackPaint);
+//   c.drawRRect(RRect.fromRectAndRadius(outerBoard, Radius.circular(4)),outerBoardPaint);
+//   c.drawRRect(RRect.fromRectAndRadius(board, Radius.circular(4)), boardPaint);
 
-   c.drawRect(bgBlack, bgBlackPaint);
-   c.drawRRect(RRect.fromRectAndRadius(outerBoard, Radius.circular(4)),outerBoardPaint);
-   c.drawRRect(RRect.fromRectAndRadius(board, Radius.circular(4)), boardPaint);
-
-    but = Rect.fromLTWH(x, y, xWidth, xHeight);
-
-      home.renderRect(c, but);
-      banner.renderRect(c, bannerRect);
-      gamePlan.renderRect(c, gamePlanRect);
-   tp1.paint(c, new Offset(screenW / 3, screenH *.38));
-   tp2.paint(c, new Offset(screenW /2.5, screenH *.42));
-
-
+//    but = Rect.fromLTWH(x, y, xWidth, xHeight);
+//
+//     // home.renderRect(c, but);
+//   c.drawRRect(RRect.fromRectAndRadius(but, Radius.circular(6)), butPaint);
+//   //tp4.paint(c, but.center.translate(-but.width/4, -but.height/4));
+//
+//     // banner.renderRect(c, bannerRect);
+//      gamePlan.renderRect(c, gamePlanRect);
+//   tp1.paint(c, new Offset(screenW / 3, screenH *.38));
+//   //tp2.paint(c, new Offset(screenW /2.5, screenH *.42));
+//
+//
    SScore  = new TextSpan(style: TextStyle(
+     fontFamily: "font1",
      fontStyle: FontStyle.normal,
-     fontSize: screenW/ 10,
+     fontSize: screenW/ 7.8,
      foreground: Paint()
        ..style = PaintingStyle.fill
        ..strokeWidth = 6
-       ..color = Color.fromRGBO(0, 0, 0, 1),
+       ..color = Color.fromRGBO(255, 255, 255, 1),
    ), text: score.toString());
-   tp3 = new TextPainter(text: SScore,
+   tp4= new TextPainter(text: SScore,
        textAlign: TextAlign.center,
        textDirection: TextDirection.ltr);
-   tp3.layout();
-
+   tp4.layout();
+//
 if(score.toString().length==1){
-  tp3.paint(c, new Offset(screenW *.45, screenH *.48));
+  tp4.paint(c, new Offset(screenW *.43, screenH *.58));
 }
 else if(score.toString().length==2){
-  tp3.paint(c, new Offset(screenW *.42, screenH *.48));
+  tp4.paint(c, new Offset(screenW *.38, screenH *.58));
 }else{
-  tp3.paint(c, new Offset(screenW *.39, screenH *.48));
+  tp4.paint(c, new Offset(screenW *.33, screenH *.58));
 }
 
 

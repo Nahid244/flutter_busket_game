@@ -22,9 +22,9 @@ class CrossBut{
 
     xWidth=w/14;
     xHeight=h/28;
-    this.x=w-xWidth;
-    this.y=h/100;
-    cross=Sprite('cross.png');
+    this.x=w-xWidth*1.5;
+    this.y=h/35;
+    cross=Sprite('crossnew.png');
     but = Rect.fromLTWH(x, y, xWidth, xHeight);
   }
   draw(Canvas c){

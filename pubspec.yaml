@@ -38,6 +38,10 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+
+
+
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -57,6 +61,7 @@ flutter:
        - assets/images/home.png
        - assets/images/banner.png
        - assets/images/gameplan.png
+       - assets/images/gameplannew.png
        - assets/images/basketball_sprite.png
        - assets/images/lives.png
        - assets/images/volOff.png
@@ -69,6 +74,7 @@ flutter:
        - assets/images/sound_on.png
        - assets/images/volOn.png
        - assets/images/cross.png
+       - assets/images/crossnew.png
        - assets/images/1.png
        - assets/images/2.png
        - assets/images/3.png
@@ -91,7 +97,13 @@ flutter:
        - assets/images/20.png
        - assets/images/21.png
        - assets/images/22.png
-
+       - assets/images/basketpop.png
+       - assets/images/homepop.png
+       - assets/images/popbg.png
+  fonts:
+        - family: font1
+          fonts:
+            - asset: fonts/font1.ttf
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

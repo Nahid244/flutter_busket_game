@@ -58,17 +58,17 @@ class CrossButPop {
     boardPaint=Paint();
     boardPaint.color=Color.fromRGBO(255, 255, 255, 1);
 
-    outerBoard=Rect.fromLTWH(w/6-w/100, h/3-w/100, w*.70+w/50, h/4+w/50);
+    outerBoard=Rect.fromLTWH(w/6-w/200, h/3-h/400, w*.70+w/110, h/4+h/200);
     outerBoardPaint=Paint();
     outerBoardPaint.color=Color.fromRGBO(0, 0, 0, 1);
 
     quitBut=Rect.fromLTWH(w/4.2,y, xWidth, xHeight);
     quitButPaint=Paint();
-    quitButPaint.color=Color.fromRGBO(176,224,230, 1);
+    quitButPaint.color=Color.fromRGBO(84, 119, 175, 1);
 
     cancelBut=Rect.fromLTWH(w*.55,y, xWidth, xHeight);
     cancelButPaint=Paint();
-    cancelButPaint.color=Color.fromRGBO(176,224,230, 1);
+    cancelButPaint.color=Color.fromRGBO(84, 119, 175, 1);
     //
 
     yName = new TextSpan(style: TextStyle(
@@ -103,7 +103,7 @@ class CrossButPop {
       foreground: Paint()
         ..style = PaintingStyle.fill
         ..strokeWidth = 6
-        ..color = Color.fromRGBO(0, 0, 0, 1),
+        ..color = Color.fromRGBO(255, 255, 255, 1),
     ), text: "Quit");
     tp3 = new TextPainter(text: yQuite,
         textAlign: TextAlign.left,
@@ -116,7 +116,7 @@ class CrossButPop {
       foreground: Paint()
         ..style = PaintingStyle.fill
         ..strokeWidth = 6
-        ..color = Color.fromRGBO(0, 0, 0, 1),
+        ..color = Color.fromRGBO(255, 255, 255, 1),
     ), text: "Cancel");
     tp4 = new TextPainter(text: yCancel,
         textAlign: TextAlign.left,
@@ -142,7 +142,7 @@ class CrossButPop {
     tp1.paint(c, new Offset(screenW / 5, screenH *.38));
     tp2.paint(c, new Offset(screenW /5, screenH *.42));
 
-    tp3.paint(c, quitBut.center.translate(-quitBut.width/4, -quitBut.height/4));
+    tp3.paint(c, quitBut.center.translate(-quitBut.width/5, -quitBut.height/4));
     tp4.paint(c, cancelBut.center.translate(-cancelBut.width/4, -cancelBut.height/4));
 
 
@@ -150,16 +150,20 @@ class CrossButPop {
 
   }
 
-  bool onTapped(double x, double y) {
+  String onTapped(double x, double y) {
+
 
     if(quitBut.contains(Offset(x, y))){
 
-      print("quite clicked");
+
+      return "Q";
 
     }
     else if(cancelBut.contains(Offset(x, y))){
-      print("cancel clicked");
+
       gamePause=false;
+      return "C";
+
     }
 
   }

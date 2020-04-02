@@ -26,6 +26,28 @@ import 'package:flutter_busket_game/soundButton.dart';
 
 import 'directionanimation.dart';
 
+
+//void main() => runApp(MyApp());
+//class MyApp extends StatefulWidget{
+//  @override
+//  State<StatefulWidget> createState() {
+//    // TODO: implement createState
+//    return MyApp_State();
+//  }
+//
+//}
+//class MyApp_State extends State<MyApp>{
+//  @override
+//  Widget build(BuildContext context) {
+//    // TODO: implement build
+//    return MaterialApp(
+//      home: ,
+//    );
+//  }
+//
+//}
+
+
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   Util flameUtil = Util();
@@ -375,7 +397,7 @@ class GG extends Game{
 
   @override
   void update(double t) {
-    //print(t);
+   // print(t);
 
     if(gamePause==false) {
       if (life >= 1) {
@@ -461,13 +483,20 @@ class GG extends Game{
       soundBut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
     }
     if(gamePause){
-      crossButPop.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+      String tmp1=crossButPop.onTapped(d.globalPosition.dx, d.globalPosition.dy);
+      if(tmp1=="Q"){
+        print("quite clicked");
+      }
+      else{
+        print("cancel clicked");
+      }
     }
 
     if(life<=0){
       bool tmp=hbut.onTapped(d.globalPosition.dx, d.globalPosition.dy);
       if(tmp){
-      // init();
+
+
 
 
       }
@@ -483,6 +512,7 @@ class GG extends Game{
 
   @override
   void onDetach() {
+      super.onDetach();
 
   }
 

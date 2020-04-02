@@ -37,7 +37,7 @@ class DirectionAnimation{
     index=0;
     index1=0;
     this.x=w/2;
-    this.y=h/2;
+    this.y=h*.7;
     xWidth=w/12;
     xHeight=h/24;
     radius=w/6;

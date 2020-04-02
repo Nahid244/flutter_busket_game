@@ -22,7 +22,7 @@ class Live{
    life1=Sprite('heart_life.png');
 
    this.x=w/20;
-   this.y=h/20;
+   this.y=h/35;
    xWidth=w/16;
    xHeight=h/32;
 

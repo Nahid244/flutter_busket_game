@@ -22,8 +22,8 @@ class SoundBut{
     screenW=w;
     screenH=h;
 
-    this.x=w-w/6;
-    this.y=h/20;
+    this.x=w-w/4.8;
+    this.y=h/35;
     xWidth=w/14;
     xHeight=h/28;
     On=Sprite('sound_on.png');

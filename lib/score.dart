@@ -24,10 +24,10 @@ class ScoreBoard{
     Score=Sprite('scoreback.png');
 
     this.x=w/3+w / 20;
-    this.y=h/48;
+    this.y=h/45;
     xWidth=w/4;
     xHeight=h/18;
-    scoreYPos=h/40;
+    scoreYPos=h/38;
   }
   draw(Canvas c,int score){
     String s=score.toString();

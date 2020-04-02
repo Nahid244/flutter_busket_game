@@ -234,9 +234,12 @@ class Ball {
     updateVelocityDependingOnHeight();
 
 
-
+    //print("life $life");
     if(timer>500 || y>=screenSizeY){
-      init(screenSizeX, screenSizeY, screenW/7);
+      if(life>=1){
+        init(screenSizeX, screenSizeY, screenW/7);
+      }
+
 
 
     }
