@@ -305,7 +305,7 @@ class Ball {
 
       if(rising==true){
         y-=velocity;
-        if(ballrisingShrink){
+        if(ballrisingShrink && radius>basket[0].xWidth/3){
           radius-=screenH/600;
         }
 

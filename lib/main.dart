@@ -139,7 +139,7 @@ class GG extends Game{
      soundEnabled=true;
     firstTimeTuto=true;
 
-     playerName="Rohim";
+     playerName="Devilplan";
     gamePause=false;
 
     live=Live(screenSize.width,screenSize.height);

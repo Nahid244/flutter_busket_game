@@ -56,7 +56,7 @@ class HomeBut {
     screenW = w;
     screenH = h;
 
-    this.x = w*.4;
+    this.x = w*.43;
     this.y = h *.7;
     xWidth = w / 7;
     xHeight = w / 7;
@@ -113,7 +113,7 @@ class HomeBut {
         ..color = Color.fromRGBO(255, 255, 255, 1),
     ), text: playerName);
     tp2 = new TextPainter(text: yName,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.center,
         textDirection: TextDirection.ltr);
     tp2.layout();
 
@@ -127,7 +127,7 @@ class HomeBut {
         ..color = Color.fromRGBO(255, 255, 255, 1),
     ), text:"Score");
     tp3 = new TextPainter(text: yScore,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.center,
         textDirection: TextDirection.ltr);
     tp3.layout();
 
@@ -170,7 +170,8 @@ class HomeBut {
      gamePlan.renderRect(c, gamePlanRect);
      home.renderRect(c, but);
       tp1.paint(c, new Offset(screenW *.03, screenH *.31));
-     tp2.paint(c, new Offset(screenW *.5-(length*(screenW/8))/3.1, screenH *.40));//(font size:screenW/8)
+     // Offset o=;
+     tp2.paint(c,new Offset(screenW*.5-tp2.width/2, screenH *.40) );//(font size:screenW/8)
      tp3.paint(c, new Offset(screenW *.28, screenH *.50));
 //   c.drawRect(bgBlack, bgBlackPaint);
 //   c.drawRRect(RRect.fromRectAndRadius(outerBoard, Radius.circular(4)),outerBoardPaint);
@@ -202,16 +203,16 @@ class HomeBut {
        textDirection: TextDirection.ltr);
    tp4.layout();
 //
-if(score.toString().length==1){
-  tp4.paint(c, new Offset(screenW *.43, screenH *.58));
-}
-else if(score.toString().length==2){
-  tp4.paint(c, new Offset(screenW *.38, screenH *.58));
-}else{
-  tp4.paint(c, new Offset(screenW *.33, screenH *.58));
-}
+//if(score.toString().length==1){
+//  tp4.paint(c, new Offset(screenW *.43, screenH *.58));
+//}
+//else if(score.toString().length==2){
+//  tp4.paint(c, new Offset(screenW *.39, screenH *.58));
+//}else{
+//  tp4.paint(c, new Offset(screenW *.33, screenH *.58));
+//}
 
-
+    tp4.paint(c, new Offset(screenW *.5-tp4.width/2, screenH *.58));
   }
 
   bool onTapped(double x, double y) {

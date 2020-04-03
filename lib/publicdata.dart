@@ -3,4 +3,4 @@ bool soundEnabled=true;
 bool firstTimeTuto=true;
 bool gamePause=false;
 
-String playerName="De_xian";
+String playerName="devilplan";

@@ -15,6 +15,7 @@ class ScoreBoard{
   double xWidth;
   double xHeight;
   Sprite Score;
+  Rect scoreRect;
 
   double scoreYPos;
 
@@ -28,28 +29,29 @@ class ScoreBoard{
     xWidth=w/4;
     xHeight=h/18;
     scoreYPos=h/38;
+    scoreRect=Rect.fromLTWH(x, y, xWidth, xHeight);
   }
   draw(Canvas c,int score){
     String s=score.toString();
    // s="";
-    Score.renderRect(c, Rect.fromLTWH(x, y, xWidth, xHeight));
+    Score.renderRect(c, scoreRect);
     TextSpan span = new TextSpan(style: new TextStyle(
              color: Color.fromRGBO(255,255,255, 1), fontSize: screenW / 14),
              text: s);
          TextPainter tp = new TextPainter(text: span,
-             textAlign: TextAlign.left,
+             textAlign: TextAlign.center,
              textDirection: TextDirection.ltr);
          tp.layout();
-      if(s.length==1){
-        tp.paint(c, new Offset(x+screenW / 10,scoreYPos));
-      }
-      else if(s.length==2){
-        tp.paint(c, new Offset(x+screenW / 13,scoreYPos));
-      }
-      else{
-        tp.paint(c, new Offset(x+screenW / 16,scoreYPos));
-      }
-
+//      if(s.length==1){
+//        tp.paint(c, new Offset(x+screenW / 10,scoreYPos));
+//      }
+//      else if(s.length==2){
+//        tp.paint(c, new Offset(x+screenW / 13,scoreYPos));
+//      }
+//      else{
+//        tp.paint(c, new Offset(x+screenW / 16,scoreYPos));
+//      }
+    tp.paint(c, new Offset(scoreRect.center.dx-tp.width/2,scoreYPos));
 
     }
 
