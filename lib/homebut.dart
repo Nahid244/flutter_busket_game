@@ -63,7 +63,7 @@ class HomeBut {
     but = Rect.fromLTWH(x, y, xWidth, xHeight);
     home = Sprite('homepop.png');
     bg=Sprite("popbg.png");
-    bgRect=Rect.fromLTWH(0, 0, w, h);
+    bgRect=Rect.fromLTWH(0, 0, screenW, screenH);
 
     basketBg=Sprite("basketpop.png");
     basketBgRect=Rect.fromLTWH(0,0 , w*.50, h*.3);

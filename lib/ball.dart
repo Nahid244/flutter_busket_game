@@ -77,7 +77,8 @@ class Ball {
   int scorebreakdown;
   bool ekthrowAKonoCollision;
   //delete
-
+   int hitCount;
+   bool ekbarHitCountSet;
 
   Ball(double w,double h,double r){
     scoreIncreaserCleanSheet=2;
@@ -152,7 +153,7 @@ class Ball {
 
 
     if(pastScore==score ){
-      life--;
+     // life--;
     }
     pastScore=score;
 
@@ -194,8 +195,8 @@ class Ball {
 
 
     scorebreakdown=1;
-
-
+    hitCount=0;
+    ekbarHitCountSet=true;
 
   }
   void draw(Canvas c){
@@ -263,6 +264,12 @@ class Ball {
 
         }
         else if(y>=basket[1].y-radius*2.5 ){
+          if(ekbarHitCountSet){
+
+            hitCount=0;
+            ekbarHitCountSet=false;
+
+          }
           mass=sqrt(2*g*(screenH-(basket[1].y-radius*2.3)));
 
         }
@@ -323,7 +330,14 @@ class Ball {
 
 
                if(basketLeftCollision){
-                 ballShootAmount=(radius-(basket[hittedBasket].x-x).abs())/10;
+                 if(hitCount<=2){
+                   ballShootAmount=(radius-(basket[hittedBasket].x-x).abs())/10;
+                 }
+                 else{
+                   ballShootAmount=radius/5;
+                 }
+
+
 
                   if(basket[hittedBasket].x<x ){
 
@@ -354,7 +368,14 @@ class Ball {
 
                }
                else if(basketRightCollision){
-                 ballShootAmount=(radius-(basket[hittedBasket].x+basket[hittedBasket].xWidth-x).abs())/10;
+
+                 if(hitCount<=2){
+                   ballShootAmount=(radius-(basket[hittedBasket].x+basket[hittedBasket].xWidth-x).abs())/10;
+                 }
+                 else{
+                   ballShootAmount=radius/5;
+                 }
+
 
                  if(basket[hittedBasket].x+basket[hittedBasket].xWidth>x ){
 
@@ -465,13 +486,16 @@ class Ball {
         basketCollisionHit = true;
         basketLeftCollision = true;
         basketRightCollision = false;
-     //  if(basketLeftPointY>y+radius*1.5 ){
+        hitCount++;
+       if(hitCount<=2 ){
           rising = true;
           falling = false;
-     //  }
+       }
 
         initialVelocity = mass;
       //  mass--;
+
+        //print(hitCount);
         ekthrowAKonoCollision=true;
          scoreCleanSheet=false;
         if(soundEnabled){
@@ -484,13 +508,16 @@ class Ball {
         basketCollisionHit=true;
         basketLeftCollision=false;
         basketRightCollision=true;
-    //  if(basketLeftPointY>y+radius*1.5 ){
+        hitCount++;
+      if(hitCount<=2 ){
           rising=true;
           falling=false;
-      // }
+       }
 
        initialVelocity=mass;
      //  mass--;
+
+        //print(hitCount);
         ekthrowAKonoCollision=true;
         scoreCleanSheet=false;
         if(soundEnabled) {
